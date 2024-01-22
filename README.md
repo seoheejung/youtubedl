@@ -45,8 +45,15 @@ npm run restart
 
 ```
 
+#### exe 실행파일 (electron)
+```
+npm install --save-dev electron
+npx electron-packager . youtubeDL --platform=win32 --arch=x64
+/youtubeDL-win32-x64/youtubeDL.exe 파일 관리자 권한 실행 필요
+```
+
 #### 💬 이후 작업
 ```
 CSS 작업 (완료)
-exe 실행파일 만들기
+exe 실행파일 만들기 (jQuery가 exe파일에서 읽히지 않아 바닐라 스크립트로 변경)
 ```

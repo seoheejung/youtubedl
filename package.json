@@ -2,19 +2,21 @@
   "name": "ytdl",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "start" : "forever start -w -o ./logs/out.log -e ./logs/err.log app.js",
-    "stop" : "forever stop app.js",
+    "start": "forever start -w -o ./logs/out.log -e ./logs/err.log app.js",
+    "stop": "forever stop app.js",
     "restart": "forever restart app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "exe": "electron ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
     "ejs": "^3.1.9",
+    "electron-packager": "^17.1.2",
     "express": "^4.18.2",
     "ffmpeg": "^0.0.4",
     "fluent-ffmpeg": "^2.1.2",
@@ -28,5 +30,8 @@
     "winston": "^3.11.0",
     "youtube-dl-exec": "^2.5.5",
     "ytdl-core": "^4.11.5"
+  },
+  "devDependencies": {
+    "electron": "^28.1.4"
   }
 }
