@@ -1,0 +1,5 @@
+node_modules
+public/merged
+public/uploads
+public/rss.xml
+public/sitemap.xml

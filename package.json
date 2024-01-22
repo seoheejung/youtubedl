@@ -1,0 +1,28 @@
+{
+  "name": "ytdl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "ffmpeg": "^0.0.4",
+    "fluent-ffmpeg": "^2.1.2",
+    "hangul-js": "^0.2.6",
+    "iconv-lite": "^0.6.3",
+    "moment": "^2.30.1",
+    "nodemon": "^3.0.2",
+    "os": "^0.1.2",
+    "path": "^0.12.7",
+    "unorm": "^1.6.0",
+    "youtube-dl-exec": "^2.5.5",
+    "ytdl-core": "^4.11.5"
+  }
+}
