@@ -15,63 +15,77 @@ const downloadVideo = (videoUrl) => {
             const directoryPath = path.join(os.homedir(), 'Desktop');
             let title = info.title.replace(/[<>:"/\\|?*]/g, '_');
             title = unorm.nfc(title); // 자소분리된 파일이름을 NFC 형태로 정규화
-            let outputPath = path.join(directoryPath, `${title}.webm`)
-            console.log(outputPath)
+            
+            // 파일 이름 중복 확인 후 이름 변경
+            let outputPath = getUniqueFilename(directoryPath, title);
             
             // 2. 비디오 다운로드
             const subprocess = youtubedl.exec(videoUrl, {
                 format: 'bestvideo+bestaudio/best',
                 output: outputPath
             });
-
-            console.log(`Running subprocess as ${subprocess.pid}`);
+            console.log(`${subprocess.pid} . 파일 이름 : ${outputPath}`)
             // 추가 확장자가 있는 경우
             fs.readdir(directoryPath, function(err, files) {
                 if (err) throw err;
-
                 files.forEach(function(file) {
                     if (file.includes(`${title}.webm`)) {
                         const oldPath = path.join(directoryPath, file);
                         const newPath = path.join(directoryPath, `${file.split('.webm')[0]}.webm`);
 
-                        fs.rename(oldPath, newPath, function(err) {
-                            if (err) throw err;
-                            console.log('File Renamed:', newPath);
-                        });
+                        if (oldPath !== newPath) {
+                            fs.rename(oldPath, newPath, function(err) {
+                                if (err) throw err;
+                                console.log('File Renamed:', newPath);
+                            });
+                        }
                     }
                 });
             });
 
             // 3. 비디오 변환 
             subprocess.on('exit', code => {
-                console.log(`Process exited with code ${code}`);
+                console.log(`${subprocess.pid} . Process exited with code ${code}`);
+                const newOutputPath = outputPath.split('.webm')[0]
                 if(code === 0){
-                    console.log(`Download completed. File saved at ${outputPath}`);
+                    console.log(`${subprocess.pid} . Download completed. File saved at ${outputPath}`);
                     ffmpeg(outputPath)
-                        .output(path.join(directoryPath, `${title}.mp4`))
+                        .output(`${newOutputPath}.mp4`)
                         .on('end', () => {
-                            console.log('변환 완료.');
+                            console.log(`${subprocess.pid} . ${newOutputPath}.mp4 변환 완료.`);
                             fs.unlink(outputPath, err => {
-                                if(err) console.error(`파일 삭제 중 오류 발생: ${err.message}`);
-                                else console.log(`파일 ${outputPath}가 성공적으로 삭제되었습니다.`);
+                                if(err) console.error(`${subprocess.pid} . 파일 삭제 중 오류 발생: ${err.message}`);
+                                else console.log(`${subprocess.pid} . 파일 ${newOutputPath}가 성공적으로 삭제되었습니다.`);
                             });
-                            resolve();  // 변환이 완료되면 Promise를 이행(resolve)합니다.
+                            resolve();  // 변환이 완료되면 Promise를 이행
                         })
                         .on('error', err => {
-                            console.error(`변환 중 오류 발생: ${err.message}`);
-                            reject(err);  // 변환 중 오류가 발생하면 Promise를 거부(reject)합니다.
+                            console.error(`${subprocess.pid} . 변환 중 오류 발생: ${err.message}`);
+                            reject(err);  // 변환 중 오류가 발생하면 Promise를 거부
                         })
-                        .run();
+                    .run();
                 }
             });
 
             subprocess.on('error', err => {
                 console.error(`An error occurred while downloading the video: ${err.message}`);
-                reject(err);  // 다운로드 중 오류가 발생하면 Promise를 거부(reject)합니다.
+                reject(err);  
             });
         });
     });
 };
+
+// 동일한 환경에서 동일한 URL이 왔을 경우 이름 변경
+const getUniqueFilename = (directoryPath, title) => {
+    let newFileName = path.join(directoryPath, `${title}.webm`);
+    let index = 1;
+
+    while (fs.existsSync(newFileName)) {
+        newFileName = path.join(directoryPath, `${title}(${index}).webm`);
+        index++;
+    }
+    return newFileName;
+}
 
 
 // 선택한 동영상의 사용 가능한 형식 목록이 출력

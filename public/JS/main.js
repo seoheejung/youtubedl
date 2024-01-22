@@ -51,12 +51,14 @@ $(document).ready(() => {
                 },
                 error: (error) => {
                     // 오류가 발생한 경우에 실행할 코드를 여기에 작성하세요.
-                    console.error('Error:', error);
+                    console.error('Error:', error.responseJSON.error);
                     Swal.fire({
                         icon: 'error',
-                        text: error,
+                        text: error.responseJSON.error,
+                    }).then(() => {
+                        $('#progressBar').hide();
+                        location.reload();  // 새로고침
                     });
-                    $('#progressBar').hide();
                 }
             });
         }

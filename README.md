@@ -10,7 +10,7 @@
 
 #### 💡 필요 패키지
 ```
-npm install path fs youtube-dl-exec os fluent-ffmpeg nodemon moment body-parser unorm ejs   
+npm install path fs youtube-dl-exec os fluent-ffmpeg nodemon moment body-parser unorm ejs forever 
 ```
 #### 💡 프로젝트 구조
 ```
@@ -29,10 +29,11 @@ npm install path fs youtube-dl-exec os fluent-ffmpeg nodemon moment body-parser 
 1. 윈도우 패키지 매니저 Chocolatey 설치 (https://halligalli0.tistory.com/38)
 2. choco install ffmpeg
 
-#### 💡 배포 방법
+#### 서버 실행
 ```
-pm2 사용
-pm2 start app.js
+npm install winston@latest
+
+forever start -c "npm run dev" ./
 ```
 
 #### 💬 이후 작업
