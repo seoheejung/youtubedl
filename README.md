@@ -31,9 +31,18 @@ npm install path fs youtube-dl-exec os fluent-ffmpeg nodemon moment body-parser 
 
 #### 서버 실행
 ```
-npm install winston@latest
+# 개발 환경 실행
+npm run dev
 
-forever start -c "npm run dev" ./
+# forever로 서버 실행
+npm run start
+
+# forever 서버 종료
+npm run stop
+
+# forever 서버 재시작
+npm run restart
+
 ```
 
 #### 💬 이후 작업
