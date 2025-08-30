@@ -19,7 +19,7 @@ function createWindow() {
 
     // Electron BrowserWindow를 통해 Node.js 서버의 URL 로드
     win.loadURL('http://localhost:3000');  // 서버가 실행 중인 URL
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 }
 
 // Electron의 'ready' 이벤트가 발생했을 때 createWindow 함수를 호출
