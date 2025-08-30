@@ -8,7 +8,7 @@ require('./app');
 // BrowserWindow를 생성하고 설정하는 코드
 function createWindow() {
     const win = new BrowserWindow({
-        width: 600,
+        width: 800,
         height: 960,
         webPreferences: {
             nodeIntegration: true, // Node.js 환경을 활성화
