@@ -66,6 +66,23 @@ npm install youtube-dl-exec fluent-ffmpeg path fs os unorm ejs express body-pars
     ffmpegLocation: 'C:\\ProgramData\\chocolatey\\lib\\ffmpeg\\tools\\ffmpeg\\bin\\ffmpeg.exe'
     ```
 
+### 🔧 명령어 직접 실행 (테스트용)
+- 코드에서 오류가 발생할 경우, 터미널(PowerShell)에서 직접 yt-dlp 명령어를 실행해 정상 동작 여부를 확인할 수 있습니다:
+```
+.\node_modules\youtube-dl-exec\bin\yt-dlp.exe "https://www.youtube.com/watch?v={유튜뷰영상코드}" `
+  --cookies "cookies\youtube.txt" `
+  --format "bestvideo+bestaudio/best" `
+  --merge-output-format mp4 `
+  -o "$env:USERPROFILE\Desktop\%(title)s.%(ext)s"
+```
+  - --cookies: 로그인 세션 쿠키(cookies/youtube.txt) 사용
+  - --format: 최고 화질 비디오 + 오디오 다운로드
+  - --merge-output-format mp4: 다운로드 후 mp4 파일로 병합
+  - -o: 출력 경로 및 파일명 지정 (%(title)s는 영상 제목으로 자동 대체됨)
+
+👉 이 명령어로 정상 다운로드가 되면, Node.js 코드에서도 동일하게 동작해야 합니다.  
+만약 콘솔에서는 성공하는데 코드에서는 실패한다면 쿠키 경로, ffmpeg 경로, 또는 파일 권한 문제일 가능성이 높습니다.
+
 ### 서버 실행
 ```
 # 개발 환경 실행
